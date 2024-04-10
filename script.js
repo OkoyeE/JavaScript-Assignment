@@ -176,57 +176,89 @@
 
     //  /// Part 2: Practical Math
 
-function calculateTripCostsAndTime(distance, speeds, fuelEfficiencies, budget, fuelCost) {
-    // Store results for each speed
-    let results = [];
+// function calculateTripCostsAndTime(distance, speeds, fuelEfficiencies, budget, fuelCost) {
+//     // Store results for each speed
+//     let results = [];
 
-    speeds.forEach((speed, index) => {
-        const fuelEfficiency = fuelEfficiencies[index];
-        const gallonsNeeded = distance / fuelEfficiency;
-        const cost = gallonsNeeded * fuelCost;
-        const time = distance / speed;
-        const withinBudget = cost <= budget;
+//     speeds.forEach((speed, index) => {
+//         const fuelEfficiency = fuelEfficiencies[index];
+//         const gallonsNeeded = distance / fuelEfficiency;
+//         const cost = gallonsNeeded * fuelCost;
+//         const time = distance / speed;
+//         const withinBudget = cost <= budget;
 
-        results.push({
-            speed,
-            gallonsNeeded,
-            cost,
-            time,
-            withinBudget
-        });
-    });
+//         results.push({
+//             speed,
+//             gallonsNeeded,
+//             cost,
+//             time,
+//             withinBudget
+//         });
+//     });
 
-    return results;
-}
+//     return results;
+// }
 
-function logResults(results) {
-    results.forEach(result => {
-        console.log(`At ${result.speed} mph:`);
-        console.log(`- Gallons of fuel needed: ${result.gallonsNeeded.toFixed(2)}`);
-        console.log(`- Total fuel cost: $${result.cost.toFixed(2)}`);
-        console.log(`- Trip duration: ${result.time.toFixed(2)} hours`);
-        console.log(`- Within budget: ${result.withinBudget ? 'Yes' : 'No'}`);
-        console.log('-----------------------------------');
-    });
-}
+// function logResults(results) {
+//     results.forEach(result => {
+//         console.log(`At ${result.speed} mph:`);
+//         console.log(`- Gallons of fuel needed: ${result.gallonsNeeded.toFixed(2)}`);
+//         console.log(`- Total fuel cost: $${result.cost.toFixed(2)}`);
+//         console.log(`- Trip duration: ${result.time.toFixed(2)} hours`);
+//         console.log(`- Within budget: ${result.withinBudget ? 'Yes' : 'No'}`);
+//         console.log('-----------------------------------');
+//     });
+// }
 
-function findBestOption(results) {
-    // Sort by cost, then by time
-    const sorted = results.sort((a, b) => a.cost - b.cost || a.time - b.time);
-    const bestOption = sorted[0];
-    console.log(`Best option: Travel at ${bestOption.speed} mph`);
-}
+// function findBestOption(results) {
+//     // Sort by cost, then by time
+//     const sorted = results.sort((a, b) => a.cost - b.cost || a.time - b.time);
+//     const bestOption = sorted[0];
+//     console.log(`Best option: Travel at ${bestOption.speed} mph`);
+// }
+
+// // Constants
+// const distance = 1500; // in miles
+// const speeds = [55, 60, 75]; // in mph
+// const fuelEfficiencies = [30, 28, 23]; // in mpg
+// const budget = 175; // in dollars
+// const fuelCost = 3; // in dollars per gallon
+
+// // Calculate and log the results
+// const results = calculateTripCostsAndTime(distance, speeds, fuelEfficiencies, budget, fuelCost);
+// logResults(results);
+
+// // Find and log the best option
+// findBestOption(results);
 
 // Constants
-const distance = 1500; // in miles
-const speeds = [55, 60, 75]; // in mph
-const fuelEfficiencies = [30, 28, 23]; // in mpg
-const budget = 175; // in dollars
-const fuelCost = 3; // in dollars per gallon
+const tripDistance = 1500; // miles
+const fuelBudget = 175; // dollars
+const fuelCostPerGallon = 3; // dollars
 
-// Calculate and log the results
-const results = calculateTripCostsAndTime(distance, speeds, fuelEfficiencies, budget, fuelCost);
-logResults(results);
+// Fuel efficiency at different speeds (miles per gallon)
+const efficiencyAt55mph = 30;
+const efficiencyAt60mph = 28;
+const efficiencyAt75mph = 23;
 
-// Find and log the best option
-findBestOption(results);
+// Calculate the number of gallons needed and the cost for each speed
+function calculateFuelRequirements(speed, efficiency) {
+    const gallonsNeeded = tripDistance / efficiency;
+    const totalCost = gallonsNeeded * fuelCostPerGallon;
+    return { gallonsNeeded, totalCost };
+}
+
+// Calculate for 55mph
+const fuelAt55mph = calculateFuelRequirements(55, efficiencyAt55mph);
+console.log(`At 55 mph: ${fuelAt55mph.gallonsNeeded.toFixed(2)} gallons needed, cost: $${fuelAt55mph.totalCost.toFixed(2)}`);
+console.log(`Within budget at 55 mph: ${fuelAt55mph.totalCost <= fuelBudget}`);
+
+// Calculate for 60mph
+const fuelAt60mph = calculateFuelRequirements(60, efficiencyAt60mph);
+console.log(`At 60 mph: ${fuelAt60mph.gallonsNeeded.toFixed(2)} gallons needed, cost: $${fuelAt60mph.totalCost.toFixed(2)}`);
+console.log(`Within budget at 60 mph: ${fuelAt60mph.totalCost <= fuelBudget}`);
+
+// Calculate for 75mph
+const fuelAt75mph = calculateFuelRequirements(75, efficiencyAt75mph);
+console.log(`At 75 mph: ${fuelAt75mph.gallonsNeeded.toFixed(2)} gallons needed, cost: $${fuelAt75mph.totalCost.toFixed(2)}`);
+console.log(`Within budget at 75 mph: ${fuelAt75mph.totalCost <= fuelBudget}`);
